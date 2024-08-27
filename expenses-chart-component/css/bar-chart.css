@@ -1,0 +1,133 @@
+.expenses-chart-container .component {
+  height: 387.2px;
+  flex-direction: column;
+  gap: 3rem;
+  padding-block: 1.2rem;
+  background-color: var(--clr-neutral-100);
+}
+
+.expenses-chart-container .component > *,
+.expenses-chart-container .component .chart-container > * {
+  width: 100%;
+}
+
+.expenses-chart-container .component .chart-title {
+  font-size: 1.56rem;
+  font-weight: var(--fw-700);
+  color: var(--clr-neutral-400);
+}
+
+.expenses-chart-container .component .chart-container {
+  flex-direction: column-reverse;
+  gap: 1.2rem;
+}
+
+.expenses-chart-container .component .chart-container .bar-chart {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.expenses-chart-container .component .chart-container .bar-chart > * {
+  width: 100%;
+}
+
+.expenses-chart-container .component .chart-container .bars,
+.expenses-chart-container .component .chart-container .bar-chart .bar-labels {
+  align-items: flex-end;
+  gap: 0.7rem;
+}
+
+.expenses-chart-container .component .chart-container .bars .bar {
+  position: relative;
+  width: 100%;
+  border-radius: 0.3rem;
+  background-color: var(--clr-primary-100);
+  transition: 500ms ease-in-out;
+  animation: grow 1000ms 50ms ease-in-out forwards;
+  z-index: 9;
+}
+
+.expenses-chart-container .component .chart-container .bars .bar::before {
+  content: attr(data-amount-spend);
+  position: absolute;
+  top: -3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: var(--fw-700);
+  color: var(--clr-neutral-100);
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  background-color: var(--clr-neutral-400);
+  transition: 200ms 100ms ease-in-out;
+  transform-origin: 0%;
+  scale: 0;
+  opacity: 0;
+}
+
+.expenses-chart-container .component .chart-container .bars .bar:hover::before {
+  scale: 1;
+  opacity: 1;
+}
+
+.expenses-chart-container .component .chart-container .bars .bar:hover {
+  background-color: hsl(10, 96%, 80%);
+}
+
+@keyframes grow {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(--height);
+  }
+}
+
+.expenses-chart-container .component .chart-container .bars .bar:nth-child(3) {
+  background-color: var(--clr-primary-200);
+}
+
+.expenses-chart-container
+  .component
+  .chart-container
+  .bars
+  .bar:nth-child(3):hover {
+  background-color: hsl(186, 65%, 74%);
+}
+
+.expenses-chart-container .component .chart-container .bar-chart .bar-labels p {
+  width: 100%;
+  font-size: 0.7rem;
+  color: var(--clr-neutral-300);
+  text-align: center;
+}
+
+.expenses-chart-container .component .chart-container .line {
+  width: 100%;
+  height: 2px;
+  background-color: var(--clr-neutral-200);
+}
+
+@media screen and (min-width: 31.25rem) {
+  .expenses-chart-container .component {
+    height: 513px;
+    padding: 2.25rem;
+  }
+
+  .expenses-chart-container .component .chart-title {
+    font-size: 1.78rem;
+  }
+
+  .expenses-chart-container .component .chart-container {
+    gap: 2.2rem;
+  }
+
+  .expenses-chart-container
+    .component
+    .chart-container
+    .bar-chart
+    .bar-labels
+    p {
+    font-size: 0.9rem;
+  }
+}

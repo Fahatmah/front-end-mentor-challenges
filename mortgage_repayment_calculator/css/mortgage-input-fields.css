@@ -1,0 +1,84 @@
+#mortgageInputFields,
+#termAndInterestRate {
+  width: 100%;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+#mortgageInputFields .field,
+#mortgageInputFields .field .input-container,
+#mortgageInputFields .field .input-container input {
+  width: 100%;
+}
+
+#mortgageInputFields .field {
+  align-items: flex-start;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
+}
+
+#mortgageInputFields .field label {
+  font-size: calc(var(--fs-def) - 0.1rem);
+  font-weight: var(--fw-500);
+  color: var(--clr-slate-700);
+}
+
+#mortgageInputFields .field .input-container {
+  position: relative;
+  overflow: hidden;
+}
+
+#mortgageInputFields .field .input-container input {
+  position: relative;
+  font-weight: var(--fw-700);
+
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid var(--clr-slate-700);
+  z-index: 1;
+}
+
+#mortgageInputFields .field .input-container input:hover {
+  border: 1px solid var(--clr-slate-900);
+}
+
+#mortgageInputFields
+  .field:nth-child(1)
+  .input-container
+  input:not(#termAndInterestRate .field .input-container input) {
+  padding-inline-start: 3rem;
+}
+
+#mortgageInputFields .field .input-container span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  font-weight: var(--fw-700);
+  color: var(--clr-slate-700);
+
+  padding: 0.8rem;
+  background-color: var(--clr-slate-100);
+}
+
+#termAndInterestRate .field .input-container span {
+  right: 0;
+  border-start-end-radius: 4px;
+  border-end-end-radius: 4px;
+}
+
+#mortgageInputFields
+  .field
+  .input-container
+  span:not(#termAndInterestRate .field .input-container span) {
+  left: 0;
+  border-start-start-radius: 4px;
+  border-end-start-radius: 4px;
+}
+
+@media screen and (min-width: 700px) {
+  #termAndInterestRate {
+    flex-direction: row;
+  }
+}

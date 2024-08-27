@@ -1,0 +1,134 @@
+@import url(mortgage-header.css);
+@import url(mortgage-input-fields.css);
+@import url(mortgage-type.css);
+@import url(calc-button.css);
+@import url(mortgage-results.css);
+@import url(error-validation-styles.css);
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font: inherit;
+}
+
+button,
+input {
+  outline: 0;
+  border: 0;
+  background: none;
+}
+
+button,
+input[type='radio'] {
+  cursor: pointer;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+:root {
+  /* primary */
+  --clr-lime: hsl(61, 70%, 52%);
+  --clr-red: hsl(4, 69%, 50%);
+  /* neutral */
+  --clr-white: hsl(0, 0%, 100%);
+  --clr-slate-100: hsl(202, 86%, 94%);
+  --clr-slate-300: hsl(203, 41%, 72%);
+  --clr-slate-500: hsl(200, 26%, 54%);
+  --clr-slate-700: hsl(200, 24%, 40%);
+  --clr-slate-900: hsl(202, 55%, 16%);
+
+  --ff-pjs: 'Plus Jakarta Sans', sans-serif;
+  --fs-def: 1rem;
+
+  --fw-500: 500;
+  --fw-700: 700;
+
+  --body-ff: var(--ff-pjs);
+  --body-fs: var(--fs-def);
+
+  --d: 1px solid red;
+}
+
+/* utils */
+.fl-c {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fl-sb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+label,
+button,
+h1 {
+  text-transform: capitalize;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+
+  font-family: var(--body-ff);
+  font-size: var(--body-fs);
+  /* color: var(--clr-slate-900); */
+  color: var(--clr-slate-100);
+
+  background-color: var(--clr-slate-100);
+}
+
+main {
+  width: min(100% - 0rem, 60rem);
+  margin-inline: auto;
+}
+
+main #mortgageCalculator {
+  flex-direction: column;
+}
+
+@media screen and (min-width: 700px) {
+  main {
+    min-height: 100vh;
+    width: min(100% - 2rem, 60rem);
+  }
+
+  main #mortgageCalculator {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: row;
+    border-radius: 1.3rem;
+    background-color: var(--clr-white);
+    overflow: hidden;
+  }
+}
+
+footer {
+  position: absolute;
+  bottom: 0.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+footer a {
+  font-size: 0.8rem;
+  color: var(--clr-slate-900);
+  text-decoration: underline;
+  background-color: hsl(204, 62%, 79%);
+}

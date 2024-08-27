@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+    <!-- font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Plus+Jakarta+Sans:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic"
+      rel="stylesheet"
+    />
+    <title>Frontend Mentor | Mortgage repayment calculator</title>
+    <link rel="stylesheet" href="css/stylesheet.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="fl-c">
+      <div id="mortgageCalculator" class="fl-c">
+        <form id="mortgageForm" class="fl-c">
+          <header class="fl-sb">
+            <h1>mortgage calculator</h1>
+            <button id="clearAll" type="button">clear all</button>
+          </header>
+
+          <!-- input fields -->
+          <section id="mortgageInputFields" class="fl-c">
+            <!-- mortgage amount -->
+            <div class="field fl-c">
+              <div class="input-container">
+                <input type="text" id="mortgage-amount" value="300,000"/>
+                <span>£</span>
+              </div>
+              <label for="mortgage-amount">mortgage amount</label>
+            </div>
+
+            <div id="termAndInterestRate" class="fl-sb">
+              <!-- mortgage term -->
+              <div class="field fl-c">
+                <div class="input-container">
+                  <input type="number" id="mortgage-term" value="25"/>
+                  <span>years</span>
+                </div>
+                <label for="mortgage-term">mortgage term</label>
+              </div>
+
+              <!-- interest rate -->
+              <div class="field fl-c">
+                <div class="input-container">
+                  <input type="number" id="interest-rate" step="0.01"  value="5.25"/>
+                  <span>%</span>
+                </div>
+                <label for="interest-rate">interest rate</label>
+              </div>
+            </div>
+
+            <!-- mortgage type -->
+            <div class="mortgage-radio-container">
+              <p class="label">Mortgage Type</p>
+            </div>
+            <div id="mortgageRadio" class="fl-sb">
+              <!-- repayment -->
+              <div class="radio-container fl-c">
+                <input
+                  type="radio"
+                  id="repayment"
+                  name="mortgage-type"
+                  value="repayment"
+                  checked
+                />
+                <label for="repayment">repayment</label>
+              </div>
+              <!-- interest only -->
+              <div class="radio-container fl-c">
+                <input
+                  type="radio"
+                  id="interest-only"
+                  name="mortgage-type"
+                  value="interest-only"
+                />
+                <label for="interest-only">interest only</label>
+              </div>
+            </div>
+          </section>
+
+          <!-- submit button -->
+          <button type="submit" class="fl-c">
+            <img
+              src="assets/images/icon-calculator.svg"
+              alt="icon-calculator"
+            />
+            calculate repayments
+          </button>
+        </form>
+
+        <div id="mortgageResults" class="fl-c">
+          <!-- empty message -->
+          <div class="empty-message fl-c">
+            <img
+              src="assets/images/illustration-empty.svg"
+              alt="illustration-empty"
+              class="illustration-empty"
+            />
+            <div class="body-text fl-c">
+              <h2>Results shown here</h2>
+              <p>
+                Complete the form and click "calculate repayments" to see what
+                your monthly repayments would be.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <a href="https://www.frontendmentor.io/challenges">FEM Challenge. </a
+      ><a href="https://github.com/Fahatmah?tab=repositories" target="_blank"
+        >Coded by Fat</a
+      >
+    </footer>
+  </body>
+</html>

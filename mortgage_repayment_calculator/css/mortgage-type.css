@@ -1,0 +1,70 @@
+#mortgageRadio {
+  width: 100%;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+#mortgageRadio .radio-container {
+  position: relative;
+  width: 100%;
+}
+
+#mortgageRadio .radio-container input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  outline: var(--d);
+  opacity: 0;
+}
+
+#mortgageRadio .radio-container input:checked + label {
+  border: 0;
+  background-color: rgba(215, 218, 47, 0.1);
+  outline: 2px solid var(--clr-lime);
+}
+
+#mortgageRadio .radio-container label::before,
+#mortgageRadio .radio-container label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 1.1rem;
+  transform: translateY(-50%);
+
+  width: 0.8rem;
+  height: 0.8rem;
+
+  border-radius: 50%;
+  outline: 2px solid var(--clr-slate-700);
+}
+
+#mortgageRadio .radio-container label::after {
+  left: 1.268rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  outline: 0;
+}
+
+#mortgageRadio .radio-container input:checked + label::before {
+  outline: 2px solid var(--clr-lime);
+}
+
+#mortgageRadio .radio-container input:checked + label::after {
+  background-color: var(--clr-lime);
+}
+
+#mortgageRadio .radio-container label {
+  width: 100%;
+  padding-block: 0.8rem;
+  padding-inline-start: 3rem;
+
+  font-weight: var(--fw-700);
+
+  border-radius: 4px;
+  border: 1px solid var(--clr-slate-700);
+}
+
+#mortgageRadio .radio-container input:hover + label {
+  border: 1px solid var(--clr-lime);
+}

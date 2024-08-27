@@ -1,0 +1,41 @@
+.expenses-chart-container .chart-container .summary h3,
+.expenses-chart-container .chart-container .summary h4 {
+  font-weight: var(--fw-700);
+}
+.expenses-chart-container .chart-container .summary {
+  align-items: flex-end;
+}
+.expenses-chart-container .chart-container .summary p {
+  font-size: 0.8rem;
+  color: var(--clr-neutral-300);
+}
+
+.expenses-chart-container .chart-container .summary h3 {
+  font-size: 1.6rem;
+  margin-top: 0.3rem;
+}
+
+.expenses-chart-container .chart-container .summary h4 {
+  font-size: 0.8rem;
+}
+
+.expenses-chart-container .chart-container .summary .previous-month-total {
+  text-align: right;
+}
+
+@media screen and (min-width: 31.25rem) {
+  .expenses-chart-container .chart-container .summary {
+    margin-bottom: 0.4rem;
+  }
+  .expenses-chart-container .chart-container .summary p {
+    font-size: 1rem;
+  }
+
+  .expenses-chart-container .chart-container .summary h3 {
+    font-size: 2.8rem;
+  }
+
+  .expenses-chart-container .chart-container .summary h4 {
+    font-size: 1.05rem;
+  }
+}

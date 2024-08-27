@@ -1,0 +1,60 @@
+.expenses-chart-container .balance-container {
+  color: var(--clr-neutral-100);
+  background-color: var(--clr-primary-100);
+}
+
+.expenses-chart-container .balance-container .body-text {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.expenses-chart-container .balance-container .body-text h1 {
+  font-size: 1.25rem;
+  font-weight: var(--fw-700);
+}
+
+.expenses-chart-container .balance-container .body-text p {
+  font-size: 0.8rem;
+}
+
+.expenses-chart-container .balance-container .circles {
+  position: relative;
+  margin-right: 0.2rem;
+}
+
+.expenses-chart-container .balance-container .circles .circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.expenses-chart-container .balance-container .circles .outline.circle {
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  border: 2px solid var(--clr-neutral-100);
+}
+
+.expenses-chart-container .balance-container .circles .solid.circle {
+  background-color: var(--clr-neutral-400);
+}
+
+@media screen and (min-width: 31.25rem) {
+  .expenses-chart-container .balance-container .body-text {
+    gap: 0.5rem;
+  }
+
+  .expenses-chart-container .balance-container .body-text p {
+    font-size: 1rem;
+  }
+
+  .expenses-chart-container .balance-container .body-text h1 {
+    font-size: 2rem;
+  }
+
+  .expenses-chart-container .balance-container .circles .circle {
+    width: 3rem;
+    height: 3rem;
+  }
+}

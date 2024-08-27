@@ -1,0 +1,16 @@
+.field.error .input-container input {
+  border: 2px solid var(--clr-red) !important;
+}
+
+.field.error .input-container span {
+  color: var(--clr-slate-100) !important;
+  background-color: var(--clr-red) !important;
+}
+
+.field.error .error-message,
+.radio-error .error-message {
+  font-size: calc(var(--fs-def) - 0.18rem);
+  color: var(--clr-red);
+
+  margin-top: 0.25rem;
+}

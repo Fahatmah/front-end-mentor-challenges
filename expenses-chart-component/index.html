@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <!-- google font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic"
+      rel="stylesheet"
+    />
+    <title>Frontend Mentor | Expenses chart component</title>
+    <link rel="stylesheet" href="css/stylesheet.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body class="fl-c">
+    <main>
+      <div class="expenses-chart-container fl-c">
+        <!-- header -->
+        <header class="balance-container fl-sb">
+          <div class="body-text fl-c">
+            <p>My balance</p>
+            <h1>$921.48</h1>
+          </div>
+
+          <div class="circles">
+            <div class="outline circle"></div>
+            <div class="solid circle"></div>
+          </div>
+        </header>
+        <!-- end of header -->
+
+        <!-- chart -->
+        <section class="component fl-sb">
+          <h2 class="chart-title">Spending - Last 7 days</h2>
+          <div class="chart-container fl-c">
+            <div class="summary fl-sb">
+              <div class="current-month-total">
+                <p>Total this month</p>
+                <h3 class="current-total">$478.33</h3>
+              </div>
+
+              <div class="previous-month-total">
+                <h4 class="previous-total">+2.4%</h4>
+                <p>from last month</p>
+              </div>
+            </div>
+
+            <h1 class="line"></h1>
+          </div>
+        </section>
+        <!-- end of chart -->
+      </div>
+    </main>
+
+    <footer class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >
+      Coded by <a href="https://www.frontendmentor.io/profile/Fahatmah">Fat</a>
+    </footer>
+  </body>
+</html>
