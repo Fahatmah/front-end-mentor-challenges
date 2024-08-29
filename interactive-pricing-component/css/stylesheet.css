@@ -106,7 +106,6 @@ main .component .pricing-form .line {
   outline: 1px solid var(--clr-neutral-300);
 }
 
-
 footer {
   width: 100%;
   position: absolute;
@@ -131,7 +130,7 @@ footer a:hover {
 
 @media screen and (min-width: 43.75rem) {
   body {
-    background-position: top -8.5rem left;
+    /* background-position: top -8.5rem left; */
     background-size: 100%;
   }
 
