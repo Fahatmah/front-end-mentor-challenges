@@ -61,9 +61,9 @@ button {
   justify-content: space-between;
 }
 
-html {
+/* html {
   overflow: hidden;
-}
+} */
 
 body {
   position: relative;
@@ -113,6 +113,7 @@ footer {
   bottom: 0.5rem;
   font-size: 0.7rem;
   color: var(--clr-neutral-500);
+  display: none;
 }
 
 footer a {
