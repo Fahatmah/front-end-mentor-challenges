@@ -29,10 +29,10 @@ const updatePageViewsAndPrice = () => {
   }.00`
 }
 
-const setBillingMode = (e) => {
+const setBillingMode = () => {
   let price = Number(priceEl.textContent.replace(/^\$/, '').slice(0, 2))
 
-  e.currentTarget.classList.toggle('toggle-yearly')
+  toggleButton.classList.toggle('toggle-yearly')
 
   if (toggleButton.classList.contains('toggle-yearly')) {
     priceEl.textContent = `$${discount(price)}.00`
@@ -48,19 +48,3 @@ const discount = (price) => {
   const discountedPrice = annualPrice * 0.75
   return discountedPrice
 }
-
-priceRangeSlider.addEventListener('input', updatePageViewsAndPrice)
-toggleButton.addEventListener('click', setBillingMode)
-
-// - 10K page views / $8 per month
-// - 50K page views / $12 per month
-// - 100K page views / $16 per month
-// - 500k page views / $24 per month
-// - 1M page views / $36 per month
-
-// Yearly Billing 25% discount
-
-// FIX
-// toggling yearly billing should
-// show an annual payment depending
-// on number of page views

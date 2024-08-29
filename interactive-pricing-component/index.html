@@ -50,6 +50,7 @@
                   min="0"
                   max="4"
                   value="2"
+                  oninput="updatePageViewsAndPrice()"
                 />
                 <div class="progress"></div>
               </div>
@@ -62,7 +63,7 @@
 
             <div class="toggle-billing-container fl-c">
               <p class="monthly">monthly billing</p>
-              <button type="button" id="toggleBill">
+              <button type="button" id="toggleBill" onclick="setBillingMode()">
                 <span class="circle toggle-yearly"></span>
               </button>
               <p class="yearly">yearly billing <span>-25%</span></p> 
