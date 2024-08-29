@@ -1,0 +1,40 @@
+main .component .pricing-form .pricing-details {
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0 1.3rem 1.8rem 1.3rem;
+}
+
+main .component .pricing-form .pricing-details .details {
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+main .component .pricing-form .pricing-details .details li {
+  gap: 0.8rem;
+  font-size: 0.8rem;
+}
+
+main .component .pricing-form .pricing-details button {
+  font-size: 0.8rem;
+  color: var(--clr-neutral-300);
+  padding: 0.8rem 3rem;
+  border-radius: 2rem;
+  background-color: var(--clr-neutral-600);
+}
+
+main .component .pricing-form .pricing-details button:hover {
+  color: var(--clr-neutral-100);
+}
+
+@media screen and (min-width: 43.75rem) {
+  main .component .pricing-form .pricing-details {
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 0rem 2.65rem 1.68rem 2.65rem;
+  }
+
+  main .component .pricing-form .pricing-details .details {
+    align-items: flex-start;
+  }
+}

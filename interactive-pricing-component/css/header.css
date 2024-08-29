@@ -25,3 +25,15 @@ main header .bg-pattern-circles {
   position: absolute;
   z-index: -1;
 }
+
+@media screen and (min-width: 43.75rem) {
+  main header h1 {
+    font-size: 1.76rem;
+  }
+  main header .paragraph {
+    flex-direction: row;
+  }
+  main header .paragraph p {
+    font-size: 0.92rem;
+  }
+}
