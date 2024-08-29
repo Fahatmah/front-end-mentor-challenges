@@ -1,0 +1,129 @@
+@import url(header.css);
+@import url(slider.css);
+@import url(toggle-bill.css);
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font: inherit;
+}
+
+button {
+  outline: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+:root {
+  /* Primary */
+  --clr-primary-100: hsl(14, 92%, 95%);
+  --clr-primary-200: hsl(15, 100%, 70%);
+  --clr-primary-300: hsl(226, 100%, 87%);
+  --clr-primary-400: hsl(174, 77%, 80%);
+  --clr-primary-500: hsl(174, 86%, 45%);
+
+  /* Neutral */
+  --clr-neutral-100: hsl(0, 0%, 100%);
+  --clr-neutral-200: hsl(230, 100%, 99%);
+  --clr-neutral-300: hsl(224, 65%, 95%);
+  --clr-neutral-400: hsl(223, 50%, 87%);
+  --clr-neutral-500: hsl(225, 20%, 60%);
+  --clr-neutral-600: hsl(227, 35%, 25%);
+
+  --ff-manrope: 'Manrope', sans-serif;
+  --fs-def: 1.06rem;
+  --fw-600: 600;
+  --fw-800: 800;
+
+  --ff-body: var(--ff-manrope);
+  --fs-body: var(--fs-def);
+
+  --d: solid red 1px;
+}
+
+/* utilities */
+.fl-c {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fl-sb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+
+  font-family: var(--ff-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-600);
+  color: var(--clr-neutral-500);
+
+  background-color: var(--clr-neutral-200);
+  background-image: url(/images/bg-pattern.svg);
+  background-repeat: no-repeat;
+  /* background-size: 100%; */
+}
+
+main {
+  width: min(100% - 3rem);
+  margin-inline: auto;
+
+  flex-direction: column;
+  gap: 4rem;
+}
+
+main > * {
+  width: 100%;
+}
+
+main .component {
+  border-radius: 0.5rem;
+  background-color: var(--clr-neutral-100);
+  box-shadow: 0 15px 20px hsla(227, 35%, 25%, 0.063);
+}
+
+main .component .pricing-form .line {
+  border: 0;
+  outline: 0;
+  outline: 1px solid var(--clr-neutral-300);
+}
+
+main .component .pricing-form .pricing-details {
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0 1.3rem 1.8rem 1.3rem;
+}
+
+main .component .pricing-form .pricing-details .details {
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+main .component .pricing-form .pricing-details .details li {
+  gap: 0.8rem;
+  font-size: 0.8rem;
+}
+
+main .component .pricing-form .pricing-details button {
+  font-size: 0.8rem;
+  color: var(--clr-neutral-300);
+  padding: 0.8rem 3rem;
+  border-radius: 2rem;
+  background-color: var(--clr-neutral-600);
+}
+
+main .component .pricing-form .pricing-details button:hover {
+  color: var(--clr-neutral-100);
+}

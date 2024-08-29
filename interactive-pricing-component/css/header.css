@@ -1,0 +1,27 @@
+main header {
+  position: relative;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+main header h1 {
+  font-size: 1.2rem;
+  font-weight: var(--fw-800);
+  color: var(--clr-neutral-600);
+  /* color: var(--clr-neutral-100); */
+}
+
+main header .paragraph {
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+main header .paragraph p {
+  font-size: 0.8rem;
+  color: var(--clr-neutral-500);
+}
+
+main header .bg-pattern-circles {
+  position: absolute;
+  z-index: -1;
+}

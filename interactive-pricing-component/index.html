@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Manrope:200,300,regular,500,600,700,800"
+      rel="stylesheet"
+    />
+    <title>Frontend Mentor | Interactive pricing component</title>
+    <link rel="stylesheet" href="css/stylesheet.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body class="fl-c">
+    <main class="fl-c">
+      <header class="fl-c">
+        <h1>Simple, traffic-based pricing</h1>
+        <div class="paragraph fl-c">
+          <p>Sign-up for our 30-day trial.</p>
+          <p>No credit card required.</p>
+        </div>
+
+        <img
+          src="images/pattern-circles.svg"
+          alt="pattern-circles"
+          class="bg-pattern-circles"
+        />
+      </header>
+
+      <section class="component">
+        <form class="pricing-form fl-c">
+          <div class="pricing-container fl-c">
+            <div class="slider-container fl-c">
+              <h2 class="page-views">100k pageviews</h2>
+
+              <div class="slider">
+                <input
+                  type="range"
+                  name="pricingSlider"
+                  id="pricingSlider"
+                  step="1"
+                  min="0"
+                  max="4"
+                  value="2"
+                />
+                <div class="progress"></div>
+              </div>
+
+              <div class="price-value-container fl-c">
+                <p id="price">$16.00</p>
+                <span class="date">/ month</span>
+              </div>
+            </div>
+
+            <div class="toggle-billing-container fl-c">
+              <p class="monthly">monthly billing</p>
+              <button type="button" id="toggleBill">
+                <span class="circle toggle-yearly"></span>
+              </button>
+              <p class="yearly">yearly billing <span>-25%</span></p> 
+            </div>
+          </div>
+
+          <hr class="line" />
+
+          <div class="pricing-details fl-c">
+            <ul class="details fl-c">
+              <li class="fl-c">
+                <img src="images/icon-check.svg" alt="icon-check" />Unlimited
+                websites
+              </li>
+              <li class="fl-c">
+                <img src="images/icon-check.svg" alt="icon-check" />100% data
+                ownership
+              </li>
+              <li class="fl-c">
+                <img src="images/icon-check.svg" alt="icon-check" />Email
+                reports
+              </li>
+            </ul>
+
+            <button type="submit">Start my trial</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- <footer class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Fat</a>.
+    </footer> -->
+  </body>
+</html>
