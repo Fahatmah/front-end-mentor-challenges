@@ -51,6 +51,7 @@
                   max="4"
                   value="2"
                   oninput="updatePageViewsAndPrice()"
+                  aria-label="Pricing Slider"
                 />
                 <div class="progress"></div>
               </div>
@@ -63,7 +64,7 @@
 
             <div class="toggle-billing-container fl-c">
               <p class="monthly">monthly billing</p>
-              <button type="button" id="toggleBill" onclick="setBillingMode()">
+              <button type="button" id="toggleBill" onclick="setBillingMode()" aria-label="Toggle Billing Mode">
                 <span class="circle toggle-yearly"></span>
               </button>
               <p class="yearly">yearly billing <span>-25%</span></p>
