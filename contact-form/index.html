@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+
+    <!-- google font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Karla:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic"
+      rel="stylesheet"
+    />
+
+    <title>Frontend Mentor | Contact form</title>
+    <link rel="stylesheet" href="css/stylesheet.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body class="fl-c">
+    <main>
+      <form id="contactForm" class="fl-c">
+        <h1>contact us</h1>
+
+        <!-- first and last name -->
+        <div class="field-container group fl-c">
+          <!-- first name -->
+          <div class="field fl-c">
+            <label for="firstName">
+              first name
+              <span class="required-asterisk">*</span>
+            </label>
+            <input type="text" id="firstName" name="firstName" autofocus />
+            <!-- <p class="error-message">This field is required</p> -->
+          </div>
+          <!-- last name -->
+          <div class="field fl-c">
+            <label for="lastName">
+              last name
+              <span class="required-asterisk">*</span>
+            </label>
+            <input type="text" id="lastName" name="lastName" />
+            <!-- <p class="error-message">This field is required</p> -->
+          </div>
+        </div>
+
+        <!-- email address -->
+        <div class="field-container">
+          <div class="field fl-c">
+            <label for="email">
+              email address
+              <span class="required-asterisk">*</span>
+            </label>
+            <input type="email" id="email" name="email" />
+            <!-- <p class="error-message">Please enter a valid email address</p> -->
+          </div>
+        </div>
+
+        <!-- query type -->
+        <div class="query-container">
+          <p class="query-label">
+            query type <span class="required-asterisk">*</span>
+          </p>
+
+          <div class="field-container group fl-c">
+            <!-- general enquiry -->
+            <div class="field query-radio fl-c">
+              <input type="radio" id="generalInquiry" name="query" />
+              <label for="generalInquiry"> general enquiry </label>
+            </div>
+
+            <!-- support request -->
+            <div class="field query-radio fl-c">
+              <input type="radio" id="supportRequest" name="query" />
+              <label for="supportRequest"> support request </label>
+            </div>
+          </div>
+          <!-- <p class="error-message" style="margin-top: 1rem">
+            Please select a query type
+          </p> -->
+        </div>
+
+        <!-- message -->
+        <div class="field-container">
+          <div class="field fl-c">
+            <label for="message">
+              message
+              <span class="required-asterisk">*</span>
+            </label>
+            <textarea
+              name="message"
+              id="message"
+              rows="10"
+              oninput="updateTextareaHeight()"
+            ></textarea>
+            <!-- <p class="error-message">This field is required</p> -->
+          </div>
+        </div>
+
+        <!-- checkbox -->
+        <div class="field-container">
+          <div class="field consent-checkbox fl-c">
+            <label for="consent">
+              I consent to being contacted by the team
+              <span class="required-asterisk">*</span>
+            </label>
+            <input type="checkbox" id="consent" name="consent" />
+          </div>
+          <!-- <p class="error-message">To submit this form, please consent to being contacted</p> -->
+        </div>
+
+        <button type="submit">submit</button>
+      </form>
+    </main>
+
+    <!-- <footer class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+      Coded by <a href="#">Your Name Here</a>.
+    </footer> -->
+  </body>
+</html>
