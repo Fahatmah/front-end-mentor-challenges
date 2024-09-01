@@ -171,7 +171,7 @@ main {
 }
 
 .success-message {
-  /* display: none; */
+  display: none;
   width: 100%;
   max-width: 28rem;
   position: absolute;
