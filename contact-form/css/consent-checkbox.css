@@ -31,7 +31,7 @@
 }
 
 .consent-checkbox input[type='checkbox']:checked:before {
-  background-image: url(/assets/images/icon-checkbox-check.svg);
+  background-image: url(../assets/images/icon-checkbox-check.svg);
   background-position: center;
   background-size: 100%;
   border-radius: 2px;
