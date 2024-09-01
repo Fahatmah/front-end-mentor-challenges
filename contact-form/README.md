@@ -38,7 +38,7 @@ Users should be able to:
 - Solution URL:
   [Repo](https://github.com/Fahatmah/front-end-mentor-challenges/tree/main/contact-form)
 - Live Site URL:
-  [Contact Form](https://fahatmah.github.io/front-end-mentor-challenges/)
+  [Contact Form Demo](https://fahatmah.github.io/front-end-mentor-challenges/contact-form)
 
 ## My process
 
