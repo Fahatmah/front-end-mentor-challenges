@@ -134,7 +134,8 @@ h1 {
 }
 
 main {
-  width: min(100% - 2rem, 60rem);
+  position: relative;
+  width: min(100% - 2rem, 46rem);
   margin-inline: auto;
   margin-block: 2rem;
 
@@ -167,4 +168,70 @@ main {
 
 #contactForm .error-message {
   color: var(--clr-primary-300);
+}
+
+.success-message {
+  display: none;
+  width: 100%;
+  max-width: 28rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--clr-neutral-300);
+}
+
+.success-message.show {
+  display: flex;
+}
+
+.success-message p {
+  width: 100%;
+  color: var(--clr-neutral-100);
+}
+
+.success-message p.header-message {
+  justify-content: flex-start;
+  gap: 0.6rem;
+  font-weight: var(--fw-700);
+}
+
+footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--clr-neutral-300);
+  text-align: center;
+}
+
+footer a {
+  font-weight: var(--fw-700);
+  color: var(--clr-primary-200);
+  text-decoration: none;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  background-color: hsla(169, 82%, 27%, 0.14);
+}
+
+@media screen and (min-width: 46.875rem) {
+  main {
+    padding: 2.5rem;
+  }
+
+  .success-message {
+    top: -5rem;
+  }
+
+  h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  #contactForm .field-container.group {
+    flex-direction: row;
+  }
 }

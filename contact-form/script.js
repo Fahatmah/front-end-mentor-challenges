@@ -20,12 +20,17 @@ const validateFullName = () => {
       item.classList.add('error')
       let p = createErrorMessageEl('This field is required')
 
-      if (!errorMessageEl) parent.insertBefore(p, parent.lastChild)
+      if (!errorMessageEl) {
+        parent.insertBefore(p, parent.lastChild)
+        return false
+      }
     } else {
       item.classList.remove('error')
       if (parent.contains(errorMessageEl)) parent.removeChild(errorMessageEl)
     }
   })
+
+  return true
 }
 
 const validateEmail = () => {
@@ -39,11 +44,16 @@ const validateEmail = () => {
   if (emailElVal === '' || emailRegex.test(emailElVal) === false) {
     emailEl.classList.add('error')
     const p = createErrorMessageEl('Please enter a valid email address')
-    if (!errorMessageEl) parent.insertBefore(p, parent.lastChild)
+    if (!errorMessageEl) {
+      parent.insertBefore(p, parent.lastChild)
+      return false
+    }
   } else {
     emailEl.classList.remove('error')
     if (parent.contains(errorMessageEl)) parent.removeChild(errorMessageEl)
   }
+
+  return true
 }
 
 const getQueryType = () => {
@@ -58,10 +68,15 @@ const getQueryType = () => {
     const p = createErrorMessageEl('Please select a query type')
     p.style.marginTop = '1rem'
 
-    if (!errorMessageEl) parent.insertBefore(p, parent.lastChild)
+    if (!errorMessageEl) {
+      parent.insertBefore(p, parent.lastChild)
+      return false
+    }
   } else {
     if (parent.contains(errorMessageEl)) parent.removeChild(errorMessageEl)
   }
+
+  return true
 }
 
 const validateMessage = () => {
@@ -72,17 +87,30 @@ const validateMessage = () => {
     let p = createErrorMessageEl('This field is required')
 
     messageEl.classList.add('error')
-    if (!errorMessageEl) parent.insertBefore(p, parent.lastChild)
+    if (!errorMessageEl) {
+      parent.insertBefore(p, parent.lastChild)
+      return false
+    }
   } else {
     messageEl.classList.remove('error')
     if (parent.contains(errorMessageEl)) parent.removeChild(errorMessageEl)
   }
+
+  return true
 }
 
 const updateTextareaHeight = () => {
+  const mediaQuery = window.matchMedia('(min-width: 46.875rem)')
+
+  if (mediaQuery.matches) {
+    messageEl.rows = 4
+  } else messageEl.rows = 10
+
   messageEl.style.height = 'auto'
   messageEl.style.height = `${messageEl.scrollHeight}px`
 }
+
+updateTextareaHeight()
 
 const validateConsent = () => {
   let consentCheckBoxEl = contactForm.querySelector('input[type="checkbox"]')
@@ -95,15 +123,20 @@ const validateConsent = () => {
       'To submit this form, please consent to being contacted'
     )
 
-    if (!errorMessageEl) parent.insertBefore(p, parent.lastChild)
+    if (!errorMessageEl) {
+      parent.insertBefore(p, parent.lastChild)
+      return false
+    }
   } else {
     if (parent.contains(errorMessageEl)) parent.removeChild(errorMessageEl)
   }
+
+  return true
 }
 
 contactForm.addEventListener('submit', (e) => {
   e.preventDefault()
-
+  let successMessageEl = document.querySelector('.success-message')
   let isFormValid = true
 
   // validateFullName()
@@ -118,5 +151,12 @@ contactForm.addEventListener('submit', (e) => {
   if (!validateMessage()) isFormValid = false
   if (!validateConsent()) isFormValid = false
 
-  if (isFormValid) contactForm.submit()
+  if (isFormValid) {
+    successMessageEl.classList.add('show')
+    // contactForm.reset()
+
+    setTimeout(() => {
+      contactForm.submit()
+    }, 3000)
+  }
 })

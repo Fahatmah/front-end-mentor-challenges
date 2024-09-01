@@ -37,3 +37,9 @@
   border-radius: 2px;
   outline: 0;
 }
+
+@media screen and (min-width: 46.875rem) {
+  #contactForm .field-container .field.consent-checkbox {
+    margin-block: 0.85rem;
+  }
+}
