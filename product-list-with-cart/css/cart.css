@@ -3,6 +3,7 @@ main .cart {
   flex-direction: column;
   gap: 0.5rem;
   padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
   border-radius: 0.5rem;
   background-color: var(--clr-rose-100);
 }
@@ -123,4 +124,10 @@ main .cart .cart-header {
   margin-top: 2rem;
   border-radius: 2rem;
   background-color: var(--clr-rose);
+}
+
+@media screen and (min-width: 48rem) {
+  main .cart {
+    margin-top: 4rem;
+  }
 }

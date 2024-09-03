@@ -2,6 +2,7 @@ main .products-section {
   align-items: flex-start;
   flex-direction: column;
   gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 main .products-section .section-header {
@@ -27,6 +28,10 @@ main .products-section .products-list {
 }
 
 @media screen and (min-width: 68.125rem) {
+  main .products-section {
+    margin-block: 4rem;
+  }
+  
   main .products-section .products-list {
     align-items: flex-start;
     flex-direction: row;

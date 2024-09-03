@@ -3,6 +3,7 @@
 @import url(quantity-buttons.css);
 @import url(product-details.css);
 @import url(cart.css);
+@import url(confirm-modal.css);
 
 *,
 *::before,
@@ -67,11 +68,12 @@ body {
 }
 
 main {
+  min-height: 100vh;
   flex-direction: column;
   gap: 2rem;
   width: min(100% - 2.5rem, 96rem);
   margin-inline: auto;
-  margin-block: 2rem;
+  /* margin-block: 2rem; */
 }
 
 main > * {
@@ -83,10 +85,20 @@ main > * {
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: row;
-    margin-block: 4rem;
+    /* margin-block: 4rem; */
   }
 
   main aside.cart {
     align-self: flex-start;
+  }
+
+  .order-confirm-container .modal {
+    align-self: unset;
+    padding-inline: 2rem;
+    border-radius: 0.8rem;
+  }
+
+  .modal .modal-header h5 {
+    font-size: 2.4rem;
   }
 }

@@ -1,0 +1,135 @@
+section.order-confirm-container {
+  position: absolute;
+  width: 100%;
+  inset: 0;
+
+  background-color: hsla(0, 0%, 0%, 0.427);
+}
+
+.order-confirm-container .modal {
+  width: 100%;
+  max-width: 40rem;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  align-self: flex-end;
+  padding: 2rem 1.5rem;
+  padding-block-start: 2.5rem;
+  border-start-start-radius: 0.8rem;
+  border-start-end-radius: 0.8rem;
+  background-color: var(--clr-rose-100);
+}
+
+.modal .modal-header h5 {
+  font-size: 2rem;
+  font-weight: var(--fw-700);
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+
+.modal .modal-header p {
+  color: var(--clr-rose-500);
+}
+
+.modal .order-list {
+  width: 100%;
+  align-items: flex-start;
+  flex-direction: column;
+
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--clr-rose-200);
+}
+
+.order-list .order-item {
+  width: 100%;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--clr-rose-300);
+}
+
+.order-list .order-item:not(.order-list .order-item:first-child) {
+  padding-top: 1rem;
+}
+
+.order-item .order-info {
+  gap: 1rem;
+}
+
+.order-info .order-image {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+.order-image img {
+  width: 100%;
+  height: 100%;
+}
+
+.order-info .order-details {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-details .order-name {
+  font-weight: var(--fw-600);
+}
+
+.order-details .order-price {
+  gap: 0.8rem;
+}
+
+.order-price .quantity {
+  font-weight: var(--fw-600);
+  color: var(--clr-rose);
+}
+
+.order-price .price {
+  color: var(--clr-rose-500);
+}
+
+.order-item .order-item-total-price {
+  font-weight: var(--fw-600);
+}
+
+.order-list .order-total {
+  width: 100%;
+  justify-content: space-between;
+  padding-block: 1rem;
+  margin-top: 1rem;
+}
+
+.order-total h6 {
+  text-transform: capitalize;
+}
+
+.order-total .order-total-price {
+  font-size: 1.5rem;
+  font-weight: var(--fw-700);
+}
+
+.modal button {
+  width: 100%;
+
+  font-weight: var(--fw-600);
+  color: var(--clr-rose-100);
+  text-transform: capitalize;
+
+  padding-block: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 2rem;
+  background-color: var(--clr-rose);
+}
+
+@media screen and (min-width: 48rem) {
+  section.order-confirm-container {
+    min-height: 100vh;
+    inset: unset;
+    top: 0;
+    bottom: 0;
+  }
+}

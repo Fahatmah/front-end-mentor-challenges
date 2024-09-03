@@ -1,3 +1,15 @@
+document.addEventListener('DOMContentLoaded', () => {
+  let cart = getItemsLocalStorage()
+  let emptyCart = cartContainerEl.querySelector('.cart-empty')
+  if (cart.length > 0) {
+    emptyCart.style.display = 'none'
+    displayCartItems()
+  }
+
+  const confirmButton = document.getElementById('cartConfirmBtn')
+  confirmButton.addEventListener('click', confirmOrder)
+})
+
 const productListContainer = document.querySelector('.products-list')
 const cartContainerEl = document.querySelector('.cart')
 
@@ -123,6 +135,9 @@ function addToCart(e) {
   const parent = e.currentTarget.parentElement
   let pictureContainer = parent.parentElement
   pictureContainer.classList.add('active')
+  const productImageSrc = e.currentTarget.parentElement.previousElementSibling
+    .querySelector('picture img')
+    .getAttribute('src')
 
   const productName = e.currentTarget.getAttribute('data-name')
   const productID = e.currentTarget.getAttribute('data-item-id')
@@ -133,7 +148,7 @@ function addToCart(e) {
   const quantityBtnsContainer = document.createElement('div')
   quantityBtnsContainer.classList.add('quantity-control-buttons', 'fl-c')
   quantityBtnsContainer.innerHTML = `
-                <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" data-name="${productName}" data-item-id="${productID}" data-price="${productPrice}">
+                <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" data-name="${productName}" data-item-id="${productID}" data-price="${productPrice}" data-image-thumbnail="${productImageSrc}">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="10"
@@ -147,7 +162,7 @@ function addToCart(e) {
 
                   <p class="product-quantity" data-quantity="1">1</p>
 
-                  <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" data-name="${productName}" data-item-id="${productID}" data-price="${productPrice}">
+                  <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" data-name="${productName}" data-item-id="${productID}" data-price="${productPrice}"data-image-thumbnail="${productImageSrc}">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="10"
@@ -175,6 +190,7 @@ function addToCart(e) {
     price: productPrice,
     totalPrice: productPrice,
     count: 1,
+    imgSrc: productImageSrc,
   })
 
   let cart = getItemsLocalStorage()
@@ -192,6 +208,7 @@ function incrementItem(e) {
   const productPrice = parseFloat(
     e.currentTarget.getAttribute('data-price')
   ).toFixed(2)
+  const productImageSrc = e.currentTarget.getAttribute('data-image-thumbnail')
 
   const itemCount = e.currentTarget.previousElementSibling
   let currentQuantity = parseInt(itemCount.getAttribute('data-quantity'))
@@ -207,6 +224,7 @@ function incrementItem(e) {
     price: productPrice,
     totalPrice: totalPrice,
     count: currentQuantity,
+    imgSrc: productImageSrc,
   })
 
   // displayCartItems()
@@ -220,6 +238,7 @@ function decrementItem(e) {
   const productPrice = parseFloat(
     e.currentTarget.getAttribute('data-price')
   ).toFixed(2)
+  const productImageSrc = e.currentTarget.getAttribute('data-image-thumbnail')
 
   const itemCount = e.currentTarget.nextElementSibling
   let currentQuantity = parseInt(itemCount.getAttribute('data-quantity'))
@@ -245,6 +264,7 @@ function decrementItem(e) {
       price: productPrice,
       totalPrice: totalPrice,
       count: currentQuantity,
+      imgSrc: productImageSrc,
     })
 
   let cart = getItemsLocalStorage()
@@ -395,6 +415,48 @@ function removeCartItem(itemId) {
     cartContainerEl.querySelector('.cart-container').remove()
     emptyCart.style.display = 'flex'
   }
+}
+
+function confirmOrder() {
+  let cart = getItemsLocalStorage()
+  const orderModal = document.querySelector('.order-confirm-container')
+  const orderList = orderModal.querySelector('.order-list')
+  orderModal.style.display = 'flex'
+  orderList.innerHTML = cart
+    .map((item) => {
+      return `<div class="order-item fl-c">
+                <div class="order-info fl-c">
+                  <div class="order-image fl-c">
+                    <img
+                      src="${item.imgSrc}"
+                      alt="${item.item}"
+                    />
+                </div>
+
+                <div class="order-details fl-c">
+                  <p class="order-name">${item.item}</p>
+
+                  <div class="order-price fl-c">
+                    <p class="quantity">${item.count}x</p>
+                    <p class="price">@ $${item.price}</p>
+                  </div>
+                </div>
+              </div>
+
+              <p class="order-item-total-price">$${(
+                parseFloat(item.price) * item.count
+              ).toFixed(2)}</p>
+            </div>`
+    })
+    .join('')
+
+  const orderTotal = `<div class="order-total fl-c">
+                        <h6>order total</h6>
+                        <p class="order-total-price">$${cart
+                          .reduce((a, b) => a + +b.totalPrice, 0)
+                          .toFixed(2)}</p>
+                      </div>`
+  orderList.insertAdjacentHTML('beforeend', orderTotal)
 }
 
 function setItemLocalStorage(cart) {
