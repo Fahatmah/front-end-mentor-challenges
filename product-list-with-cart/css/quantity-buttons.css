@@ -1,0 +1,27 @@
+.product-buttons .quantity-control-buttons {
+  /* width: 100%; */
+  justify-content: space-between;
+  gap: 2.8rem;
+  color: var(--clr-rose-100);
+  padding-inline: 0.8rem !important;
+  background-color: var(--clr-rose);
+}
+
+.product-buttons .quantity-control-buttons button {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--clr-rose-100);
+  border-radius: 50%;
+}
+
+.product-buttons .quantity-control-buttons button:hover {
+  background-color: var(--clr-rose-100);
+}
+
+.product-buttons .quantity-control-buttons button svg {
+  width: 100%;
+}
+
+.product-buttons .quantity-control-buttons button:hover > svg path {
+  fill: var(--clr-rose);
+}

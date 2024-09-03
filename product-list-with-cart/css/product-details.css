@@ -1,0 +1,23 @@
+.product-item .product-details {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.product-item .product-details .product-category {
+  font-size: 0.8rem;
+  font-weight: var(--fw-400);
+  color: var(--clr-rose-500);
+}
+
+.product-item .product-details .product-name {
+  font-size: var(--fs-product-name);
+  font-weight: var(--fw-600);
+  color: var(--clr-rose-600);
+}
+
+.product-item .product-details .product-price {
+  font-size: 0.9rem;
+  font-weight: var(--fw-600);
+  color: var(--clr-rose);
+}

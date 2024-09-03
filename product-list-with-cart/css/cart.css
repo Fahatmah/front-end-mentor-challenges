@@ -1,0 +1,126 @@
+main .cart {
+  max-width: 26rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--clr-rose-100);
+}
+
+main .cart > * {
+  width: 100%;
+}
+
+main .cart .cart-header {
+  font-size: 1.7rem;
+  font-weight: var(--fw-700);
+  color: var(--clr-rose);
+  text-transform: capitalize;
+}
+
+.cart .cart-empty {
+  flex-direction: column;
+  gap: 1.3rem;
+  padding-block: 2rem;
+}
+
+.cart .cart-empty h3 {
+  font-weight: var(--fw-600);
+  color: var(--clr-rose-500);
+}
+
+.cart .cart-container {
+  flex-direction: column;
+}
+
+.cart .cart-container > *,
+.cart .cart-container .cart-items > * {
+  width: 100%;
+}
+
+.cart-container .cart-items {
+  flex-direction: column;
+}
+
+.cart-items .cart-item {
+  justify-content: space-between;
+  padding-block: 1.2rem;
+  border-bottom: 1px solid var(--clr-rose-200);
+}
+
+.cart-item .item-info {
+  align-items: start;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cart-item .item-info .item-name {
+  font-weight: var(--fw-600);
+  color: var(--clr-rose-600);
+}
+
+.item-info .item-details {
+  gap: 0.5rem;
+}
+
+.item-details .item-quantity {
+  font-weight: var(--fw-600);
+  color: var(--clr-rose);
+  margin-right: 0.5rem;
+}
+
+.item-details .item-price {
+  color: var(--clr-rose-500);
+}
+
+.item-details .item-total {
+  font-weight: var(--fw-600);
+  color: var(--clr-rose-500);
+}
+
+.cart-item #removeCartItem {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 1px solid var(--clr-rose-400);
+}
+
+.cart-item #removeCartItem:hover {
+  border-color: var(--clr-rose-600);
+}
+
+.cart-item #removeCartItem:hover > svg path {
+  fill: var(--clr-rose-600);
+}
+
+.cart-container .cart-order-total {
+  justify-content: space-between;
+  padding-block: 2rem;
+}
+
+.cart-order-total .cart-total-price {
+  font-size: 1.5rem;
+  font-weight: var(--fw-700);
+}
+
+.cart-container .carbon-neutral-info {
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--clr-rose-200);
+}
+
+.cart-container .carbon-neutral-info strong {
+  font-weight: var(--fw-600);
+}
+
+.cart-container .cart-confirm-btn {
+  font-weight: var(--fw-600);
+  color: var(--clr-rose-100);
+  text-transform: capitalize;
+  padding: 1rem;
+  margin-top: 2rem;
+  border-radius: 2rem;
+  background-color: var(--clr-rose);
+}

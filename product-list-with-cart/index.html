@@ -21,17 +21,28 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <main>
+    <main class="fl-c">
       <section class="products-section fl-c">
         <h1 class="section-header">desserts</h1>
 
         <div class="products-list fl-c"></div>
       </section>
 
-      <!-- <aside class="cart-sidebar">
-        <h2 class="cart-header">your cart(0)</h2>
-      </aside> -->
+      <aside class="cart fl-c">
+        <h2 class="cart-header">
+          your cart <span id="cartItemCount">(0)</span>
+        </h2>
+
+        <div class="cart-empty fl-c">
+          <img
+            src="./assets/images/illustration-empty-cart.svg"
+            alt="illustration-empty-cart"
+          />
+          <h3>Your added items will appear here</h3>
+        </div>
+      </aside>
     </main>
+
     <!-- <footer class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>.

@@ -1,4 +1,5 @@
 const productListContainer = document.querySelector('.products-list')
+const cartContainerEl = document.querySelector('.cart')
 
 fetch('./data.json')
   .then((res) => {
@@ -23,7 +24,7 @@ function displayProducts(products) {
     // checking if item already exist in the cart
     const cartItem = cart.find((item) => item.itemId === String(i + 1))
 
-    articleContent = `
+    let articleContent = `
       <div class="product-image">
         <picture class="fl-c">
           <source
@@ -31,7 +32,7 @@ function displayProducts(products) {
             media="(min-width: 1024px)"
           />
           <source
-            srcset=${product.image.talet}
+            srcset=${product.image.tablet}
             media="(min-width: 768px)"
           />
           <source
@@ -44,10 +45,10 @@ function displayProducts(products) {
           />
         </picture>
 
-        <div class="product-buttons">
-          <button id="addToCart" class="fl-c" onclick="addToCart(event)" data-name="${
-            product.name
-          }" data-item-id="${i + 1}" style="${
+        <div class="product-buttons fl-c">
+          <button id="addToCart" class="fl-c" onclick="addToCart(event)" data-price="${
+            product.price
+          }" data-name="${product.name}" data-item-id="${i + 1}" style="${
       cartItem ? 'visibility: hidden' : ''
     }">
           <img
@@ -62,7 +63,7 @@ function displayProducts(products) {
                 <div class="quantity-control-buttons fl-c">
                   <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" data-name="${
                     product.name
-                  }" data-item-id="${i + 1}">
+                  }" data-item-id="${i + 1}" data-price="${product.price}" >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="10"
@@ -80,7 +81,7 @@ function displayProducts(products) {
 
                     <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" data-name="${
                       product.name
-                    }" data-item-id="${i + 1}">
+                    }" data-item-id="${i + 1}" data-price="${product.price}" >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="10"
@@ -109,6 +110,11 @@ function displayProducts(products) {
       `
     article.innerHTML = articleContent
 
+    if (cartItem) {
+      const pictureContainer = article.querySelector('.product-image')
+      pictureContainer.classList.add('active')
+    }
+
     productListContainer.append(article)
   })
 }
@@ -120,11 +126,14 @@ function addToCart(e) {
 
   const productName = e.currentTarget.getAttribute('data-name')
   const productID = e.currentTarget.getAttribute('data-item-id')
+  const productPrice = parseFloat(
+    e.currentTarget.getAttribute('data-price')
+  ).toFixed(2)
 
   const quantityBtnsContainer = document.createElement('div')
   quantityBtnsContainer.classList.add('quantity-control-buttons', 'fl-c')
   quantityBtnsContainer.innerHTML = `
-                <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" data-name="${productName}" data-item-id="${productID}">
+                <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" data-name="${productName}" data-item-id="${productID}" data-price="${productPrice}">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="10"
@@ -138,7 +147,7 @@ function addToCart(e) {
 
                   <p class="product-quantity" data-quantity="1">1</p>
 
-                  <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" data-name="${productName}" data-item-id="${productID}">
+                  <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" data-name="${productName}" data-item-id="${productID}" data-price="${productPrice}">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="10"
@@ -160,12 +169,29 @@ function addToCart(e) {
     e.currentTarget.style.visibility = 'hidden'
   }
 
-  addItemLocalStorage({ itemId: productID, item: productName, count: 1 })
+  addItemLocalStorage({
+    itemId: productID,
+    item: productName,
+    price: productPrice,
+    totalPrice: productPrice,
+    count: 1,
+  })
+
+  let cart = getItemsLocalStorage()
+  let emptyCart = cartContainerEl.querySelector('.cart-empty')
+  if (emptyCart && cart.length > 0) emptyCart.style.display = 'none'
+
+  if (!cartContainerEl.querySelector('.cart-container')) displayCartItems()
+  updateCartList()
+  updateCart()
 }
 
 function incrementItem(e) {
   const productName = e.currentTarget.getAttribute('data-name')
   const productID = e.currentTarget.getAttribute('data-item-id')
+  const productPrice = parseFloat(
+    e.currentTarget.getAttribute('data-price')
+  ).toFixed(2)
 
   const itemCount = e.currentTarget.previousElementSibling
   let currentQuantity = parseInt(itemCount.getAttribute('data-quantity'))
@@ -173,20 +199,32 @@ function incrementItem(e) {
   currentQuantity++
   itemCount.textContent = currentQuantity
   itemCount.setAttribute('data-quantity', currentQuantity)
+  let totalPrice = (productPrice * currentQuantity).toFixed(2)
 
   updateItemLocalStorage({
     itemId: productID,
     item: productName,
+    price: productPrice,
+    totalPrice: totalPrice,
     count: currentQuantity,
   })
+
+  // displayCartItems()
+  updateCartList()
+  updateCart()
 }
 
 function decrementItem(e) {
   const productName = e.currentTarget.getAttribute('data-name')
   const productID = e.currentTarget.getAttribute('data-item-id')
+  const productPrice = parseFloat(
+    e.currentTarget.getAttribute('data-price')
+  ).toFixed(2)
+
   const itemCount = e.currentTarget.nextElementSibling
   let currentQuantity = parseInt(itemCount.getAttribute('data-quantity'))
   currentQuantity--
+  let totalPrice = (productPrice * currentQuantity).toFixed(2)
 
   itemCount.setAttribute('data-quantity', currentQuantity)
   itemCount.textContent = currentQuantity
@@ -204,8 +242,159 @@ function decrementItem(e) {
     updateItemLocalStorage({
       itemId: productID,
       item: productName,
+      price: productPrice,
+      totalPrice: totalPrice,
       count: currentQuantity,
     })
+
+  let cart = getItemsLocalStorage()
+  let emptyCart = cartContainerEl.querySelector('.cart-empty')
+  if (cart.length === 0) {
+    cartContainerEl.querySelector('.cart-container').remove()
+    emptyCart.style.display = 'flex'
+  }
+
+  updateCartList()
+  updateCart()
+}
+
+function displayCartItems() {
+  let existingCartContainer = cartContainerEl.querySelector('.cart-container')
+  if (existingCartContainer) existingCartContainer.innerHTML = ''
+
+  let cart = getItemsLocalStorage()
+  let cartContainer = document.createElement('div')
+  cartContainer.classList.add('cart-container', 'fl-c')
+  let cartItems = document.createElement('div')
+  cartItems.classList.add('cart-items', 'fl-c')
+
+  let cartItemsContent = cart
+    .map((item) => {
+      return `<div class="cart-item fl-c">
+        <div class="item-info fl-c">
+          <p class="item-name">${item.item}</p>
+          <div class="item-details fl-c">
+            <p class="item-quantity">${item.count}x</p>
+            <p class="item-price">@ ${item.price}</p>
+            <p class="item-total">$${item.totalPrice}</p>
+          </div>
+        </div>
+        <button type="button" aria-label="Remove cart item" id="removeCartItem" class="fl-c" data-item-id="${item.itemId}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
+            <path fill="#CAAFA7" d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z" />
+          </svg>
+        </button>
+      </div>`
+    })
+    .join('')
+  cartItems.innerHTML = cartItemsContent
+  cartContainer.appendChild(cartItems)
+
+  const cartContents = `
+    <div class="cart-order-total fl-c">
+      <h4>Order Total</h4>
+      <p id="cartTotalPrice" class="cart-total-price">$${cart
+        .reduce((a, b) => a + +b.totalPrice, 0)
+        .toFixed(2)}</p>
+    </div>
+    <div class="carbon-neutral-info fl-c">
+      <img src="./assets/images/icon-carbon-neutral.svg" alt="icon-carbon-neutral" />
+      This is a <strong>carbon-neutral</strong> delivery
+    </div>
+    <button type="button" id="cartConfirmBtn" class="cart-confirm-btn">confirm order</button>`
+
+  cartContainer.insertAdjacentHTML('beforeend', cartContents)
+  cartContainerEl.appendChild(cartContainer)
+
+  const removeButtons = document.querySelectorAll('#removeCartItem')
+  removeButtons.forEach((btn) =>
+    btn.addEventListener('click', (e) => {
+      let id = e.currentTarget.getAttribute('data-item-id')
+      removeCartItem(id)
+    })
+  )
+
+  updateCart()
+}
+
+function updateCartList() {
+  let cart = getItemsLocalStorage()
+  let cartItems = cartContainerEl.querySelector('.cart-container .cart-items')
+  if (cartItems)
+    cartItems.innerHTML = cart
+      .map((item) => {
+        return `<div class="cart-item fl-c">
+        <div class="item-info fl-c">
+          <p class="item-name">${item.item}</p>
+          <div class="item-details fl-c">
+            <p class="item-quantity">${item.count}x</p>
+            <p class="item-price">@ ${item.price}</p>
+            <p class="item-total">$${item.totalPrice}</p>
+          </div>
+        </div>
+        <button type="button" aria-label="Remove cart item" id="removeCartItem" class="fl-c" data-item-id="${item.itemId}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
+            <path fill="#CAAFA7" d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z" />
+          </svg>
+        </button>
+      </div>`
+      })
+      .join('')
+
+  const removeButtons = document.querySelectorAll('#removeCartItem')
+  removeButtons.forEach((btn) =>
+    btn.addEventListener('click', (e) => {
+      let id = e.currentTarget.getAttribute('data-item-id')
+      removeCartItem(id)
+    })
+  )
+}
+
+function updateCart() {
+  const cart = getItemsLocalStorage()
+  const cartItemCountEl = cartContainerEl.querySelector('#cartItemCount')
+  const cartTotalPriceEl = cartContainerEl.querySelector('#cartTotalPrice')
+
+  if (cartItemCountEl) cartItemCountEl.textContent = `(${cart.length})`
+
+  if (cartTotalPriceEl) {
+    const totalPrice = cart
+      .reduce((total, item) => total + parseFloat(item.totalPrice), 0)
+      .toFixed(2)
+    cartTotalPriceEl.textContent = `$${totalPrice}`
+  }
+}
+
+function removeCartItem(itemId) {
+  removeItemLocalStorage(itemId)
+
+  updateCartList()
+  updateCart()
+
+  const addToCartButton = document.querySelector(
+    `.product-item .product-buttons button[data-item-id="${itemId}"]`
+  )
+
+  if (addToCartButton) {
+    addToCartButton.style.visibility = 'visible'
+
+    const productContainer = addToCartButton.closest('.product-image')
+    if (productContainer) productContainer.classList.remove('active')
+
+    const quantityControl = addToCartButton.nextElementSibling
+    if (
+      quantityControl &&
+      quantityControl.classList.contains('quantity-control-buttons')
+    )
+      quantityControl.remove()
+  }
+
+  let cart = getItemsLocalStorage()
+  let emptyCart = cartContainerEl.querySelector('.cart-empty')
+  if (cart.length === 0) {
+    cartContainerEl.querySelector('.cart-container').remove()
+    emptyCart.style.display = 'flex'
+  }
 }
 
 function setItemLocalStorage(cart) {
@@ -225,7 +414,6 @@ function addItemLocalStorage(item) {
 function updateItemLocalStorage(updateItem) {
   let cart = getItemsLocalStorage()
   let index = cart.findIndex((item) => item.itemId === updateItem.itemId)
-  console.log(index)
 
   if (index !== -1) {
     cart[index] = updateItem
