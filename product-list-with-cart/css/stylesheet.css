@@ -23,6 +23,7 @@ button {
 }
 
 :root {
+  --clr-white: hsl(0, 0%, 100%);
   --clr-rose: hsl(14, 86%, 42%);
   --clr-green: hsl(159, 69%, 38%);
 
@@ -64,7 +65,7 @@ body {
 
   font-family: var(--ff-body);
   color: var(--clr-rose-600);
-  background-color: var(--clr-rose-200);
+  background-color: var(--clr-rose-100);
 }
 
 main {
@@ -78,6 +79,29 @@ main {
 
 main > * {
   width: 100%;
+}
+
+footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: var(--fw-600);
+  color: var(--clr-rose-400);
+  text-align: center;
+}
+
+footer a {
+  font-weight: var(--fw-700);
+  color: var(--clr-rose-500);
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  background-color: hsla(14, 24%, 72%, 0.562);
+}
+
+footer a:hover {
+  color: var(--clr-rose-600);
+  background-color: var(--clr-rose-300);
 }
 
 @media screen and (min-width: 48rem) {

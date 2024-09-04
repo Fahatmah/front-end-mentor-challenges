@@ -31,11 +31,15 @@ main .products-section .products-list {
   main .products-section {
     margin-block: 4rem;
   }
+
+  main .products-section .section-header {
+    font-size: 3rem;
+  }
   
   main .products-section .products-list {
     align-items: flex-start;
     flex-direction: row;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .products-list .product-item {

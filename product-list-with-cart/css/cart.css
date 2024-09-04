@@ -5,7 +5,7 @@ main .cart {
   padding: 2rem 1.5rem;
   margin-bottom: 2rem;
   border-radius: 0.5rem;
-  background-color: var(--clr-rose-100);
+  background-color: var(--clr-white);
 }
 
 main .cart > * {
