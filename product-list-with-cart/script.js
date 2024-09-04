@@ -76,7 +76,29 @@ function createProductsHTML(product, i, cartItem) {
           <img src="./assets/images/icon-add-to-cart.svg" alt="icon-add-to-cart" /> Add to Cart
         </button>
 
-        ${cartItem ? quantityBtnsContainerHTML(product) : ''}
+        ${
+          cartItem
+            ? `<div class="quantity-control-buttons fl-c">
+                <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" 
+                    data-name="${cartItem.item}" data-item-id="${cartItem.itemId}" 
+                    data-price="${cartItem.price}" data-image-thumbnail="${cartItem.imgSrc}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2">
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <p class="product-quantity" data-quantity="${cartItem.count}">${cartItem.count}</p>
+
+                <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" 
+                        data-name="${cartItem.item}" data-item-id="${cartItem.itemId}" 
+                        data-price="${cartItem.price}" data-image-thumbnail="${cartItem.imgSrc}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
+                    <path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z" />
+                  </svg>
+                </button>
+              </div>`
+            : ''
+        }
       </div>
     </div>
 
@@ -106,13 +128,11 @@ function addToCart(e) {
       .getAttribute('src'),
   }
 
-  const quantityBtnsContainer = document.createElement('div')
-  quantityBtnsContainer.classList.add('quantity-control-buttons', 'fl-c')
-  quantityBtnsContainer.innerHTML = quantityBtnsContainerHTML(productDetails)
+  const qtyBtnsContainer = createQtyBtnsContainer(productDetails)
 
   let quantityBtnsEl = parent.querySelector('.quantity-control-buttons')
   if (!quantityBtnsEl) {
-    parent.insertBefore(quantityBtnsContainer, parent.lastChild)
+    parent.insertBefore(qtyBtnsContainer, parent.lastChild)
     e.currentTarget.style.visibility = 'hidden'
   }
 
@@ -124,6 +144,15 @@ function addToCart(e) {
   document
     .getElementById('cartConfirmBtn')
     .addEventListener('click', confirmOrder)
+}
+
+function createQtyBtnsContainer(productDetails) {
+  const quantityBtnsContainer = document.createElement('div')
+  quantityBtnsContainer.classList.add('quantity-control-buttons', 'fl-c')
+  quantityBtnsContainer.innerHTML = quantityBtnsContainerHTML(productDetails)
+  console.log(quantityBtnsContainer)
+
+  return quantityBtnsContainer
 }
 
 function quantityBtnsContainerHTML(cartItem) {
