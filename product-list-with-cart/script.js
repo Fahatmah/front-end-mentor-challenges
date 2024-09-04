@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     displayCartItems()
   }
 
-  const confirmButton = document.getElementById('cartConfirmBtn')
-  confirmButton.addEventListener('click', confirmOrder)
+  document
+    .getElementById('cartConfirmBtn')
+    ?.addEventListener('click', confirmOrder)
 })
 
 const productListContainer = document.querySelector('.products-list')
@@ -200,6 +201,10 @@ function addToCart(e) {
   if (!cartContainerEl.querySelector('.cart-container')) displayCartItems()
   updateCartList()
   updateCart()
+
+  document
+    .getElementById('cartConfirmBtn')
+    .addEventListener('click', confirmOrder)
 }
 
 function incrementItem(e) {
@@ -227,7 +232,6 @@ function incrementItem(e) {
     imgSrc: productImageSrc,
   })
 
-  // displayCartItems()
   updateCartList()
   updateCart()
 }
@@ -395,19 +399,7 @@ function removeCartItem(itemId) {
     `.product-item .product-buttons button[data-item-id="${itemId}"]`
   )
 
-  if (addToCartButton) {
-    addToCartButton.style.visibility = 'visible'
-
-    const productContainer = addToCartButton.closest('.product-image')
-    if (productContainer) productContainer.classList.remove('active')
-
-    const quantityControl = addToCartButton.nextElementSibling
-    if (
-      quantityControl &&
-      quantityControl.classList.contains('quantity-control-buttons')
-    )
-      quantityControl.remove()
-  }
+  removeItemStyles(addToCart)
 
   let cart = getItemsLocalStorage()
   let emptyCart = cartContainerEl.querySelector('.cart-empty')
@@ -417,11 +409,29 @@ function removeCartItem(itemId) {
   }
 }
 
+function removeItemStyles(btn) {
+  if (btn) {
+    btn.style.visibility = 'visible'
+
+    const productContainer = btn.closest('.product-image')
+    if (productContainer) productContainer.classList.remove('active')
+
+    const quantityControl = btn.nextElementSibling
+    if (
+      quantityControl &&
+      quantityControl.classList.contains('quantity-control-buttons')
+    )
+      quantityControl.remove()
+  }
+}
+
 function confirmOrder() {
   let cart = getItemsLocalStorage()
   const orderModal = document.querySelector('.order-confirm-container')
   const orderList = orderModal.querySelector('.order-list')
   orderModal.style.display = 'flex'
+  document.body.style.overflow = 'hidden'
+
   orderList.innerHTML = cart
     .map((item) => {
       return `<div class="order-item fl-c">
@@ -459,6 +469,22 @@ function confirmOrder() {
   orderList.insertAdjacentHTML('beforeend', orderTotal)
 }
 
+function startNewOrder() {
+  let emptyCart = cartContainerEl.querySelector('.cart-empty')
+  let orderConfirmModal = document.querySelector('.order-confirm-container')
+  clearCartLocalStorage()
+  updateCart()
+
+  document.querySelectorAll('.quantity-control-buttons').forEach((btn) => {
+    removeItemStyles(btn.previousElementSibling)
+  })
+
+  orderConfirmModal.style.display = 'none'
+  document.getElementById('cartConfirmBtn').parentElement.remove()
+  emptyCart.style.display = 'flex'
+  document.body.style.overflow = 'unset'
+}
+
 function setItemLocalStorage(cart) {
   localStorage.setItem('cart', JSON.stringify(cart))
 }
@@ -487,4 +513,8 @@ function removeItemLocalStorage(productId) {
   let cart = getItemsLocalStorage()
   cart = cart.filter((item) => item.itemId !== productId)
   setItemLocalStorage(cart)
+}
+
+function clearCartLocalStorage() {
+  localStorage.removeItem('cart')
 }

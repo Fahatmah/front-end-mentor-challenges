@@ -71,7 +71,7 @@ main {
   min-height: 100vh;
   flex-direction: column;
   gap: 2rem;
-  width: min(100% - 2.5rem, 96rem);
+  width: min(100% - 2.5rem, 98rem);
   margin-inline: auto;
   /* margin-block: 2rem; */
 }
