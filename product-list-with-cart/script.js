@@ -1,31 +1,37 @@
+const productListContainer = document.querySelector('.products-list')
+const cartContainerEl = document.querySelector('.cart')
+
 document.addEventListener('DOMContentLoaded', () => {
-  let cart = getItemsLocalStorage()
-  let emptyCart = cartContainerEl.querySelector('.cart-empty')
-  if (cart.length > 0) {
-    emptyCart.style.display = 'none'
-    displayCartItems()
-  }
+  updateCartDisplay()
+  fetchProducts()
 
   document
     .getElementById('cartConfirmBtn')
     ?.addEventListener('click', confirmOrder)
 })
 
-const productListContainer = document.querySelector('.products-list')
-const cartContainerEl = document.querySelector('.cart')
+function fetchProducts() {
+  fetch('./data.json')
+    .then((res) => {
+      if (!res.ok) throw new Error('No data fetched')
+      return res.json()
+    })
+    .then((data) => {
+      displayProducts(data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
 
-fetch('./data.json')
-  .then((res) => {
-    if (!res.ok) throw new Error('No data fetched')
-    return res.json()
-  })
-  .then((data) => {
-    console.log(data)
-    displayProducts(data)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+function updateCartDisplay() {
+  let cart = getItemsLocalStorage()
+  const emptyCart = cartContainerEl.querySelector('.cart-empty')
+  if (cart.length > 0) {
+    emptyCart.style.display = 'none'
+    displayCartItems()
+  } else emptyCart.style.display = 'flex'
+}
 
 function displayProducts(products) {
   const cart = getItemsLocalStorage()
@@ -37,147 +43,72 @@ function displayProducts(products) {
     // checking if item already exist in the cart
     const cartItem = cart.find((item) => item.itemId === String(i + 1))
 
-    let articleContent = `
-      <div class="product-image">
-        <picture class="fl-c">
-          <source
-            srcset=${product.image.desktop}
-            media="(min-width: 1024px)"
-          />
-          <source
-            srcset=${product.image.tablet}
-            media="(min-width: 768px)"
-          />
-          <source
-            srcset=${product.image.mobile}
-            media="(min-width: 375px)"
-          />
-          <img
-            src=${product.image.thumbnail}
-            alt="waffle with berries"
-          />
-        </picture>
-
-        <div class="product-buttons fl-c">
-          <button id="addToCart" class="fl-c" onclick="addToCart(event)" data-price="${
-            product.price
-          }" data-name="${product.name}" data-item-id="${i + 1}" style="${
-      cartItem ? 'visibility: hidden' : ''
-    }">
-          <img
-            src="./assets/images/icon-add-to-cart.svg"
-            alt="icon-add-to-cart"
-          />
-          Add to Cart
-            </button>
-            ${
-              cartItem
-                ? `
-                <div class="quantity-control-buttons fl-c">
-                  <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" data-name="${
-                    product.name
-                  }" data-item-id="${i + 1}" data-price="${product.price}" >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        height="2"
-                        fill="none"
-                        viewBox="0 0 10 2"
-                      >
-                        <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
-                      </svg>
-                    </button>
-
-                    <p class="product-quantity" data-quantity="${
-                      cartItem.count
-                    }">${cartItem.count}</p>
-
-                    <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" data-name="${
-                      product.name
-                    }" data-item-id="${i + 1}" data-price="${product.price}" >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        height="10"
-                        fill="none"
-                        viewBox="0 0 10 10"
-                      >
-                        <path
-                          fill="#fff"
-                          d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>`
-                : ''
-            }
-          </div>
-        </div>
-
-        <div class="product-details fl-c">
-          <p class="product-category">${product.category}</p>
-          <p class="product-name">${product.name}</p>
-          <p class="product-price">$${product.price.toFixed(2)}</p>
-        </div>
-      `
-    article.innerHTML = articleContent
+    article.innerHTML = createProductsHTML(product, i, cartItem)
+    productListContainer.append(article)
 
     if (cartItem) {
       const pictureContainer = article.querySelector('.product-image')
       pictureContainer.classList.add('active')
     }
-
-    productListContainer.append(article)
   })
 }
 
+function createProductsHTML(product, i, cartItem) {
+  const productID = i + 1
+  return `
+    <div class="product-image">
+      <picture class="fl-c">
+        <source srcset=${product.image.desktop} media="(min-width: 1024px)" />
+        <source srcset=${product.image.tablet} media="(min-width: 768px)" />
+        <source srcset=${product.image.mobile} media="(min-width: 375px)" />
+        <img src=${product.image.thumbnail} alt="waffle with berries" />
+      </picture>
+
+      <div class="product-buttons fl-c">
+        <button id="addToCart" class="fl-c" onclick="addToCart(event)" data-price="${
+          product.price
+        }" 
+                data-name="${
+                  product.name
+                }" data-item-id="${productID}" style="${
+    cartItem ? 'visibility: hidden' : ''
+  }">
+          <img src="./assets/images/icon-add-to-cart.svg" alt="icon-add-to-cart" /> Add to Cart
+        </button>
+
+        ${cartItem ? quantityBtnsContainerHTML(product) : ''}
+      </div>
+    </div>
+
+    <div class="product-details fl-c">
+      <p class="product-category">${product.category}</p>
+      <p class="product-name">${product.name}</p>
+      <p class="product-price">$${product.price.toFixed(2)}</p>
+    </div>
+  `
+}
+
 function addToCart(e) {
-  const parent = e.currentTarget.parentElement
+  let button = e.currentTarget
+
+  const parent = button.parentElement
   let pictureContainer = parent.parentElement
   pictureContainer.classList.add('active')
-  const productImageSrc = e.currentTarget.parentElement.previousElementSibling
-    .querySelector('picture img')
-    .getAttribute('src')
 
-  const productName = e.currentTarget.getAttribute('data-name')
-  const productID = e.currentTarget.getAttribute('data-item-id')
-  const productPrice = parseFloat(
-    e.currentTarget.getAttribute('data-price')
-  ).toFixed(2)
+  let productDetails = {
+    itemId: button.getAttribute('data-item-id'),
+    item: button.getAttribute('data-name'),
+    price: parseFloat(button.getAttribute('data-price')).toFixed(2),
+    totalPrice: parseFloat(button.getAttribute('data-price')).toFixed(2),
+    count: 1,
+    imgSrc: e.currentTarget.parentElement.previousElementSibling
+      .querySelector('picture img')
+      .getAttribute('src'),
+  }
 
   const quantityBtnsContainer = document.createElement('div')
   quantityBtnsContainer.classList.add('quantity-control-buttons', 'fl-c')
-  quantityBtnsContainer.innerHTML = `
-                <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" data-name="${productName}" data-item-id="${productID}" data-price="${productPrice}" data-image-thumbnail="${productImageSrc}">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="10"
-                      height="2"
-                      fill="none"
-                      viewBox="0 0 10 2"
-                    >
-                      <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
-                    </svg>
-                  </button>
-
-                  <p class="product-quantity" data-quantity="1">1</p>
-
-                  <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" data-name="${productName}" data-item-id="${productID}" data-price="${productPrice}"data-image-thumbnail="${productImageSrc}">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="10"
-                      height="10"
-                      fill="none"
-                      viewBox="0 0 10 10"
-                    >
-                      <path
-                        fill="#fff"
-                        d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
-                      />
-                    </svg>
-                  </button>
-                </div>`
+  quantityBtnsContainer.innerHTML = quantityBtnsContainerHTML(productDetails)
 
   let quantityBtnsEl = parent.querySelector('.quantity-control-buttons')
   if (!quantityBtnsEl) {
@@ -185,20 +116,8 @@ function addToCart(e) {
     e.currentTarget.style.visibility = 'hidden'
   }
 
-  addItemLocalStorage({
-    itemId: productID,
-    item: productName,
-    price: productPrice,
-    totalPrice: productPrice,
-    count: 1,
-    imgSrc: productImageSrc,
-  })
-
-  let cart = getItemsLocalStorage()
-  let emptyCart = cartContainerEl.querySelector('.cart-empty')
-  if (emptyCart && cart.length > 0) emptyCart.style.display = 'none'
-
-  if (!cartContainerEl.querySelector('.cart-container')) displayCartItems()
+  addItemLocalStorage(productDetails)
+  if (!cartContainerEl.querySelector('.cart-container')) updateCartDisplay()
   updateCartList()
   updateCart()
 
@@ -207,29 +126,45 @@ function addToCart(e) {
     .addEventListener('click', confirmOrder)
 }
 
+function quantityBtnsContainerHTML(cartItem) {
+  return `
+    <button id="decrementQuantity" class="fl-c" onclick="decrementItem(event)" 
+        data-name="${cartItem.item}" data-item-id="${cartItem.itemId}" 
+        data-price="${cartItem.price}" data-image-thumbnail="${cartItem.imgSrc}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2">
+        <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+      </svg>
+    </button>
+
+    <p class="product-quantity" data-quantity="${cartItem.count}">${cartItem.count}</p>
+
+    <button id="incrementQuantity" class="fl-c" onclick="incrementItem(event)" 
+            data-name="${cartItem.item}" data-item-id="${cartItem.itemId}" 
+            data-price="${cartItem.price}" data-image-thumbnail="${cartItem.imgSrc}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
+        <path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z" />
+      </svg>
+    </button>
+  `
+}
+
 function incrementItem(e) {
-  const productName = e.currentTarget.getAttribute('data-name')
-  const productID = e.currentTarget.getAttribute('data-item-id')
-  const productPrice = parseFloat(
-    e.currentTarget.getAttribute('data-price')
-  ).toFixed(2)
-  const productImageSrc = e.currentTarget.getAttribute('data-image-thumbnail')
+  let button = e.currentTarget
+  const productPrice = parseFloat(button.getAttribute('data-price')).toFixed(2)
 
-  const itemCount = e.currentTarget.previousElementSibling
+  const itemCount = button.previousElementSibling
   let currentQuantity = parseInt(itemCount.getAttribute('data-quantity'))
-
   currentQuantity++
   itemCount.textContent = currentQuantity
   itemCount.setAttribute('data-quantity', currentQuantity)
-  let totalPrice = (productPrice * currentQuantity).toFixed(2)
 
   updateItemLocalStorage({
-    itemId: productID,
-    item: productName,
-    price: productPrice,
-    totalPrice: totalPrice,
+    itemId: button.getAttribute('data-item-id'),
+    item: button.getAttribute('data-name'),
+    price: parseFloat(button.getAttribute('data-price')).toFixed(2),
+    totalPrice: (productPrice * currentQuantity).toFixed(2),
     count: currentQuantity,
-    imgSrc: productImageSrc,
+    imgSrc: button.getAttribute('data-image-thumbnail'),
   })
 
   updateCartList()
@@ -237,38 +172,33 @@ function incrementItem(e) {
 }
 
 function decrementItem(e) {
-  const productName = e.currentTarget.getAttribute('data-name')
-  const productID = e.currentTarget.getAttribute('data-item-id')
-  const productPrice = parseFloat(
-    e.currentTarget.getAttribute('data-price')
-  ).toFixed(2)
-  const productImageSrc = e.currentTarget.getAttribute('data-image-thumbnail')
+  let button = e.currentTarget
+  const productID = button.getAttribute('data-item-id')
+  const productPrice = parseFloat(button.getAttribute('data-price')).toFixed(2)
 
-  const itemCount = e.currentTarget.nextElementSibling
+  const itemCount = button.nextElementSibling
   let currentQuantity = parseInt(itemCount.getAttribute('data-quantity'))
   currentQuantity--
-  let totalPrice = (productPrice * currentQuantity).toFixed(2)
-
   itemCount.setAttribute('data-quantity', currentQuantity)
   itemCount.textContent = currentQuantity
 
   if (currentQuantity < 1) {
-    const addToCartBtn = e.currentTarget.parentElement.previousElementSibling
+    const addToCartBtn = button.parentElement.previousElementSibling
     let parent = addToCartBtn.parentElement.parentElement
     parent.classList.remove('active')
     addToCartBtn.style.visibility = 'visible'
-    e.currentTarget.parentElement.remove()
+    button.parentElement.remove()
     currentQuantity = 0
 
     removeItemLocalStorage(productID)
   } else
     updateItemLocalStorage({
-      itemId: productID,
-      item: productName,
+      itemId: button.getAttribute('data-item-id'),
+      item: button.getAttribute('data-name'),
       price: productPrice,
-      totalPrice: totalPrice,
+      totalPrice: (productPrice * currentQuantity).toFixed(2),
       count: currentQuantity,
-      imgSrc: productImageSrc,
+      imgSrc: button.getAttribute('data-image-thumbnail'),
     })
 
   let cart = getItemsLocalStorage()
@@ -293,23 +223,7 @@ function displayCartItems() {
   cartItems.classList.add('cart-items', 'fl-c')
 
   let cartItemsContent = cart
-    .map((item) => {
-      return `<div class="cart-item fl-c">
-        <div class="item-info fl-c">
-          <p class="item-name">${item.item}</p>
-          <div class="item-details fl-c">
-            <p class="item-quantity">${item.count}x</p>
-            <p class="item-price">@ ${item.price}</p>
-            <p class="item-total">$${item.totalPrice}</p>
-          </div>
-        </div>
-        <button type="button" aria-label="Remove cart item" id="removeCartItem" class="fl-c" data-item-id="${item.itemId}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
-            <path fill="#CAAFA7" d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z" />
-          </svg>
-        </button>
-      </div>`
-    })
+    .map((item) => createCartItemContent(item))
     .join('')
   cartItems.innerHTML = cartItemsContent
   cartContainer.appendChild(cartItems)
@@ -330,14 +244,7 @@ function displayCartItems() {
   cartContainer.insertAdjacentHTML('beforeend', cartContents)
   cartContainerEl.appendChild(cartContainer)
 
-  const removeButtons = document.querySelectorAll('#removeCartItem')
-  removeButtons.forEach((btn) =>
-    btn.addEventListener('click', (e) => {
-      let id = e.currentTarget.getAttribute('data-item-id')
-      removeCartItem(id)
-    })
-  )
-
+  setItemRemoveButton()
   updateCart()
 }
 
@@ -346,25 +253,31 @@ function updateCartList() {
   let cartItems = cartContainerEl.querySelector('.cart-container .cart-items')
   if (cartItems)
     cartItems.innerHTML = cart
-      .map((item) => {
-        return `<div class="cart-item fl-c">
-        <div class="item-info fl-c">
-          <p class="item-name">${item.item}</p>
-          <div class="item-details fl-c">
-            <p class="item-quantity">${item.count}x</p>
-            <p class="item-price">@ ${item.price}</p>
-            <p class="item-total">$${item.totalPrice}</p>
-          </div>
-        </div>
-        <button type="button" aria-label="Remove cart item" id="removeCartItem" class="fl-c" data-item-id="${item.itemId}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
-            <path fill="#CAAFA7" d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z" />
-          </svg>
-        </button>
-      </div>`
-      })
+      .map((item) => createCartItemContent(item))
       .join('')
 
+  setItemRemoveButton()
+}
+
+function createCartItemContent(cartItem) {
+  return `<div class="cart-item fl-c">
+            <div class="item-info fl-c">
+              <p class="item-name">${cartItem.item}</p>
+              <div class="item-details fl-c">
+                <p class="item-quantity">${cartItem.count}x</p>
+                <p class="item-price">@ ${cartItem.price}</p>
+                <p class="item-total">$${cartItem.totalPrice}</p>
+              </div>
+            </div>
+            <button type="button" aria-label="Remove cart item" id="removeCartItem" class="fl-c" data-item-id="${cartItem.itemId}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
+                <path fill="#CAAFA7" d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z" />
+              </svg>
+            </button>
+          </div>`
+}
+
+function setItemRemoveButton() {
   const removeButtons = document.querySelectorAll('#removeCartItem')
   removeButtons.forEach((btn) =>
     btn.addEventListener('click', (e) => {
@@ -399,7 +312,7 @@ function removeCartItem(itemId) {
     `.product-item .product-buttons button[data-item-id="${itemId}"]`
   )
 
-  removeItemStyles(addToCart)
+  removeItemStyles(addToCartButton)
 
   let cart = getItemsLocalStorage()
   let emptyCart = cartContainerEl.querySelector('.cart-empty')
